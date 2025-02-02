@@ -92,9 +92,29 @@ for epoch in range(epochs):
     # hidden layer.
 
     # Derivative of the loss with respect to the
-    # activations of the second hidden layer,
-    # which is the output of the softmax (`dLossZ2`
-    # is equivalent to `dA2Z2`).
+    # outputs of the second hidden layer, which
+    # is the output of the softmax.
+    #
+    # Note: we skip the calculation of `dLossA2`
+    # because, when calculating `dLossZ2`,
+    # **because of the softmax function in combination
+    # with the cross-entropy loss**, terms cancel out:
+    #
+    #   dLoss/dZ2 = dLoss/dA2 * dA2/dZ2
+    #
+    #   dLoss/dA2 = -y / A2
+    #   dA2/dZ2 = A2 * (1 - A2)
+    #
+    #   dLoss/dZ2 = (-y / A2) * A2 * (1 - A2)
+    #   dLoss/dZ2 = -y * (1 - A2)
+    #   dLoss/dZ2 = A2 - y = y_pred - y
+    #
+    # This is a very important property of the
+    # softmax function in combination with the
+    # cross-entropy loss, which makes the
+    # calculation of the gradient of the loss
+    # with respect to the activations of the
+    # last layer very simple.
     dLossZ2 = y_pred - y
 
     # Derivative of the loss with respect to the
