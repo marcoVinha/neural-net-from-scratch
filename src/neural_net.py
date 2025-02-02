@@ -174,10 +174,4 @@ for epoch in range(epochs):
         print(f"Epoch {epoch}, Loss: {curr_loss}")
 
 
-import matplotlib.pyplot as plt
-
-plt.plot(loss_history)
-plt.xlabel("Epoch")
-plt.ylabel("Loss")
-plt.title("Training Loss Curve")
-plt.show()
+print(f"Final loss: {curr_loss}")
