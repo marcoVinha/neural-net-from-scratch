@@ -5,11 +5,11 @@ from src.utils.base import Module, Tensor
 
 class Sigmoid(Module):
     def __call__(self, X):
-        out = Tensor(1 / (1 + np.exp(-1 * X.data)))
+        out = Tensor(1 / (1 + np.exp(-X.data)))
         out._prev = {X}
 
         def _backward():
-            X.grad += out.data * (1 - out.data) * out.grad
+            X.grad += out.grad * (out.data * (1 - out.data))
 
         out._backward = _backward
         return out
@@ -29,21 +29,7 @@ class Softmax(Module):
             for i in range(batch_size):
                 p = out.data[i].reshape(-1, 1)
                 jacobian = np.diagflat(p) - p @ p.T
-                X.grad[i] += jacobian @ out.grad[i]
-
-        out._backward = _backward
-        return out
-
-
-class CrossEntropy(Module):
-    def __call__(self, probs, y):
-        eps = 1e-15
-        loss = -np.sum(y * np.log(probs + eps)) / probs.data.shape[0]
-        out = Tensor(loss)
-        out._prev = {probs}
-
-        def _backward():
-            probs.grad += (-y / (probs.data + eps)) / probs.data.shape[0]
+                X.grad[i] += out.grad[i] @ jacobian
 
         out._backward = _backward
         return out
