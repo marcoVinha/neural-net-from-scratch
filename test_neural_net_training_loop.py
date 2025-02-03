@@ -1,5 +1,5 @@
 import numpy as np
-from utils import cross_entropy, sigmoid, softmax
+from src.utils import cross_entropy, sigmoid, softmax
 
 
 np.random.seed(0)
