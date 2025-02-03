@@ -1,7 +1,9 @@
+import numpy as np
+
 from src.utils.base import Module, Tensor
 
 
-class CrossEntropy(Module):
+class CrossEntropyLoss(Module):
     def __call__(self, probs, y):
         eps = 1e-15
         loss = -1 * np.sum(y * np.log(probs.data + eps)) / probs.data.shape[0]
