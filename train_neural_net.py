@@ -51,10 +51,7 @@ for epoch in range(epochs):
                 topo_sort(prev_node)
             topo_order.append(node)
     topo_order = []
-    breakpoint()
     topo_sort(loss)
-    
-    print(topo_order)
 
     for node in reversed(topo_order):
         print(node.__class__.__name__)
@@ -64,5 +61,5 @@ for epoch in range(epochs):
 
     loss_history.append(loss.data)
     
-    # if epoch % 100 == 0:
-    print(f"Epoch {epoch}, Loss: {loss.data}")
+    if epoch % 100 == 0:
+        print(f"Epoch {epoch}, Loss: {loss.data}")
