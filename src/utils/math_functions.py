@@ -17,7 +17,7 @@ class Sigmoid(Module):
 
 class Softmax(Module):
     def __call__(self, X):
-        exps = np.exp(x.data - np.max(x.data, axis=1, keepdims=True))
+        exps = np.exp(X.data - np.max(X.data, axis=1, keepdims=True))
         probs = exps / np.sum(exps, axis=1, keepdims=True)
 
         out = Tensor(probs)
