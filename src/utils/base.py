@@ -6,7 +6,7 @@ class Tensor:
         self.data = data
         self.requires_grad = requires_grad
         self.grad = None
-        self.prev = set()
+        self._prev = set()
         self._backward = lambda: None
 
 
